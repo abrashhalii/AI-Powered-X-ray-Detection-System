@@ -1,0 +1,13 @@
+tensorflow
+keras
+numpy
+pandas
+opencv-python
+pillow
+matplotlib
+scikit-learn
+fastapi
+uvicorn
+python-multipart
+mysql-connector-python
+sqlalchemy

@@ -1,229 +1,306 @@
-# 🫁 PneumoScan AI — X-Ray Detection System
-**FYP Project | AI-Powered Pneumonia & Tuberculosis Detection**
+# 🩻 AI-Powered X-Ray Detection System
+
+![React](https://img.shields.io/badge/React-19-blue?logo=react)
+![Node.js](https://img.shields.io/badge/Node.js-Express-green?logo=node.js)
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-DeepLearning-orange?logo=tensorflow)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
+An AI-powered web application for detecting diseases from chest X-ray images using Deep Learning. The project combines a React frontend, Node.js backend, and Python-based AI inference to provide an end-to-end medical image analysis platform.
 
 ---
 
-## Project Structure
+## 📌 Overview
 
-```
-xray-detection/
-├── backend/                  ← Node.js + Express API
-│   ├── server.js             ← Main server entry point
-│   ├── models/               ← MongoDB schemas
-│   │   ├── Patient.js
-│   │   └── Scan.js
-│   ├── routes/               ← API endpoints
-│   │   ├── scans.js          ← /api/scans
-│   │   ├── patients.js       ← /api/patients
-│   │   └── reports.js        ← /api/reports
+The system allows users to upload chest X-ray images, manage patient records, and receive AI-generated predictions using a trained EfficientNetB4 model.
+
+---
+
+## ✨ Features
+
+- AI-powered X-ray image analysis
+- Chest disease prediction
+- Patient management
+- Scan management
+- Dashboard with analytics
+- Report generation
+- RESTful API
+- Modern React interface
+
+---
+
+## 🛠 Technology Stack
+
+### Frontend
+- React.js
+- JavaScript (ES6)
+- CSS3
+
+### Backend
+- Node.js
+- Express.js
+
+### Artificial Intelligence
+- Python
+- TensorFlow
+- Keras
+- OpenCV
+
+### Database
+- SQL Database
+
+---
+
+## 📂 Project Structure
+
+```text
+AI-Powered-Xray-Detection-System/
+│
+├── backend/
+│   ├── database/
 │   ├── middleware/
-│   │   └── upload.js         ← Multer file upload config
-│   ├── uploads/              ← Uploaded X-ray images stored here
-│   └── .env.example          ← Environment variables template
+│   ├── ml_model/
+│   ├── models/
+│   ├── routes/
+│   ├── uploads/
+│   ├── .env.example
+│   ├── database.py
+│   ├── main.py
+│   ├── package.json
+│   └── server.js
 │
-├── frontend/                 ← React.js UI
-│   ├── public/index.html
-│   └── src/
-│       ├── App.jsx           ← Root component + routing
-│       ├── index.css         ← Global styles + CSS variables
-│       ├── pages/
-│       │   ├── Dashboard.jsx         ← Main dashboard
-│       │   ├── ScansManagement.jsx   ← Upload + scan list
-│       │   ├── PatientRecords.jsx    ← Patient management
-│       │   └── Reports.jsx           ← Analytics + charts
-│       ├── components/
-│       │   └── Sidebar.jsx           ← Navigation sidebar
-│       └── services/
-│           └── api.js                ← Axios API calls + mock data
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   └── index.js
+│   ├── package.json
+│   └── package-lock.json
 │
-└── README.md
+├── ml_model/
+├── ml_models/
+├── ml_api.py
+├── requirements.txt
+├── README.md
+├── LICENSE
+└── start.bat
 ```
 
 ---
 
-## Quick Start
+## ⚡ Quick Start
 
-### Prerequisites
-- Node.js 18+
-- MongoDB (local or Atlas)
-- npm or yarn
-
-### Step 1 — Clone / Setup
+Follow these commands to set up the project after cloning the repository.
 
 ```bash
-# If you downloaded the zip, extract and open in VS Code
-# Then open two terminals side by side
-```
+# Clone the repository
+git clone https://github.com/abrashhalii/AI-Powered-X-ray-Detection-System.git
 
-### Step 2 — Backend Setup
-
-```bash
-# Terminal 1
+# Install backend dependencies
 cd backend
 npm install
-cp .env.example .env
-# Edit .env with your MongoDB URI
-npm run dev
+
+# Install frontend dependencies
+cd ../frontend
+npm install
+
+# Install Python dependencies
+pip install -r requirements.txt
+
 ```
 
-You should see:
-```
-🚀 Server running on http://localhost:5000
-✅ MongoDB connected
-✅ Database seeded with sample data
-```
+## 🚀 Installation
 
-### Step 3 — Frontend Setup
+### Clone the Repository
 
 ```bash
-# Terminal 2
+git clone https://github.com/abrashhalii/AI-Powered-X-ray-Detection-System.git
+```
+
+### Backend
+
+```bash
+cd backend
+npm install
+node server.js
+```
+
+### Frontend
+
+```bash
 cd frontend
 npm install
 npm start
 ```
 
-Browser opens at `http://localhost:3000` automatically.
-
----
-
-## Environment Variables (backend/.env)
-
-```
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/xray_detection
-ML_API_URL=http://localhost:8000
-JWT_SECRET=your_secret_key_here
-```
-
-**MONGO_URI options:**
-- Local MongoDB: `mongodb://localhost:27017/xray_detection`
-- MongoDB Atlas: `mongodb+srv://username:password@cluster.mongodb.net/xray_detection`
-
----
-
-## API Endpoints
-
-### Scans
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/scans | Get all scans (with filters) |
-| GET | /api/scans/:id | Get scan by ID |
-| POST | /api/scans/upload | Upload X-ray images |
-| PATCH | /api/scans/:id/status | Update scan status |
-| DELETE | /api/scans/:id | Delete scan |
-| GET | /api/scans/stats/dashboard | Dashboard statistics |
-
-### Patients
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/patients | Get all patients |
-| GET | /api/patients/:id | Get patient + their scans |
-| POST | /api/patients | Create new patient |
-| PUT | /api/patients/:id | Update patient |
-| DELETE | /api/patients/:id | Delete patient |
-
-### Reports
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/reports/analytics | Get analytics data |
-
----
-
-## Connecting Your ML Model
-
-When your ML model (from the Jupyter notebooks) is ready, create a Python Flask API:
-
-```python
-# ml_api.py — run this alongside backend
-from flask import Flask, request, jsonify
-import tensorflow as tf
-import numpy as np
-from PIL import Image
-
-app = Flask(__name__)
-
-# Load your trained model
-model = tf.keras.models.load_model(r'G:\My Drive\FYP\xray_model_v3.keras')
-CLASS_NAMES = ['NORMAL', 'PNEUMONIA']
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.json
-    image_path = data['image_path']
-    
-    img = Image.open(image_path).convert('RGB').resize((224, 224))
-    img_array = np.expand_dims(np.array(img) / 255.0, axis=0)
-    
-    preds = model.predict(img_array)[0]
-    pred_idx = np.argmax(preds)
-    
-    return jsonify({
-        'prediction': CLASS_NAMES[pred_idx],
-        'confidence': float(preds[pred_idx]) * 100,
-        'results': {
-            'normal': float(preds[0]),
-            'pneumonia': float(preds[1]),
-        }
-    })
-
-if __name__ == '__main__':
-    app.run(port=8000)
-```
+### Python
 
 ```bash
-# Terminal 3
-pip install flask tensorflow pillow
+pip install -r requirements.txt
 python ml_api.py
 ```
 
-The backend automatically calls this ML API when a scan is uploaded. If the ML API is not running, it falls back to mock results so the UI still works.
+---
+
+## 🧠 Machine Learning
+
+The AI module includes:
+
+- Data preprocessing
+- Model training
+- Cross-validation
+- Bias detection
+- Model evaluation
+- Model monitoring
+
+Model Architecture:
+
+- EfficientNetB4
+- TensorFlow
+- Keras
 
 ---
 
-## Pages Overview
+## 📸 Screenshots
 
-| Page | Route | Features |
-|------|-------|---------|
-| Dashboard | Default | Stats, X-ray analysis, Grad-CAM heatmap, recent scans |
-| Scans Management | Scans tab | Drag & drop upload, scan list, filters |
-| Patient Records | Patients tab | Full patient list, add/search/filter patients |
-| Reports & Analytics | Reports tab | Disease prevalence pie chart, scan volume bar chart, batch reporting |
+
+### 📊 Dashboard
+
+![Dashboard](screenshots/dashboard.png)
 
 ---
 
-## Tech Stack
+### 👤 Patient Records
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18, Recharts, React Dropzone |
-| Backend | Node.js, Express.js |
-| Database | MongoDB + Mongoose |
-| File Upload | Multer |
-| ML Model | TensorFlow/Keras (ResNet50) |
-| ML API Bridge | Python Flask |
-| Fonts | Syne + DM Sans (Google Fonts) |
+![Patients](screenshots/patients.png)
 
 ---
 
-## MongoDB Setup (If Not Installed)
+### 🩻 Scan Management
 
-**Option A — Install MongoDB locally:**
-Download from https://www.mongodb.com/try/download/community
-
-**Option B — MongoDB Atlas (Free Cloud):**
-1. Go to https://cloud.mongodb.com
-2. Create free cluster
-3. Get connection string
-4. Paste into MONGO_URI in .env
+![Scans](screenshots/scans.png)
 
 ---
 
-## Common Issues
+### 📈 Reports
 
-| Error | Fix |
-|-------|-----|
-| `Cannot connect to MongoDB` | Start MongoDB service or use Atlas |
-| `Port 5000 in use` | Change PORT in .env to 5001 |
-| `Module not found` | Run `npm install` in both frontend and backend |
-| `ML API timeout` | Normal — app uses mock data when ML API is off |
+![Reports](screenshots/reports.png)
 
+---
+
+### 🤖 AI Prediction
+
+![Prediction](screenshots/prediction.png)
+
+---
+### 🤖 Setting
+
+![Setting](screenshots/setting.png)
+
+---
+
+## 🏗️ System Architecture
+
+```text
+                    +----------------------+
+                    |   React Frontend     |
+                    +----------+-----------+
+                               |
+                               |
+                        REST API Calls
+                               |
+                               ▼
+                  +------------+------------+
+                  | Node.js + Express API   |
+                  +------------+------------+
+                               |
+                +--------------+--------------+
+                |                             |
+                ▼                             ▼
+        SQL Database               Python AI Module
+                |                             |
+                ▼                             ▼
+        Patient Records          EfficientNetB4 Model
+        Reports                  TensorFlow/Keras
+        Scan History             AI Prediction
+```
+
+---
+
+## 🧠 AI Model Workflow
+
+```text
+Chest X-ray Image
+        │
+        ▼
+Image Upload
+        │
+        ▼
+Image Preprocessing
+        │
+        ▼
+EfficientNetB4
+        │
+        ▼
+Disease Prediction
+        │
+        ▼
+Confidence Score
+        │
+        ▼
+Displayed on Dashboard
+```
+
+---
+
+## 📊 Dataset Information
+
+The AI model was trained using chest X-ray images.
+
+### Dataset Preparation
+
+- Image preprocessing
+- Data cleaning
+- Image normalization
+- Data augmentation
+- Dataset splitting
+- Cross-validation
+
+### Training Pipeline
+
+- Data Preprocessing
+- Model Training
+- Model Evaluation
+- Bias Detection
+- Model Monitoring
+
+> **Note:** The dataset is not included in this repository because of its large size. Only the source code and notebooks are included.
+
+## 🔮 Future Improvements
+
+- Multi-disease classification
+- Explainable AI (Grad-CAM)
+- Cloud deployment
+- Docker support
+- User authentication with JWT
+- Real-time analytics
+
+---
+
+## 👥 Contributors
+
+- **Abrash Ali**
+- **Harrum Fatima**
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+See the **LICENSE** file for complete details.
